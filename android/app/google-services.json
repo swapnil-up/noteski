@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1016276566678",
+    "project_id": "noteski",
+    "storage_bucket": "noteski.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1016276566678:android:897da15817ef82dfaeb8b7",
+        "android_client_info": {
+          "package_name": "com.example.noteski"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpl-z-gIKArBs_NoE2xLLoVT_m_rn5fH0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
