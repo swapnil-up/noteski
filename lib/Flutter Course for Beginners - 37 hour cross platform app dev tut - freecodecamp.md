@@ -315,6 +315,31 @@ Now for each of these states we can specify different things happening with a sw
 
 now in the register's onpressed we get the variable data then create a user instance with FirebaseAuth. If we look into the definition it is a promise so we must await. 
 
+### Chapter 13: Login
+
+First we create a stateful registerview, and then make the login view, which is pretty similar to the previously made registerview
+
+It is also good to structure code well. This can include a directory for views for example. 
+
+While transferring code to new dart files, it is a cheat code to press ctrl . to quickly get code to import the required packages.
+
+For login we must signin with the email and password. 
+
+If the user doesn't exist (is not found) then we need to stop crashing of the app with a try catch block. for catch we can pass e as the parameter. If we print e.runtimeType then we can see what type of error it is. 
+
+To catch specific type of exceptions, after try just write on ExceptionType catch(e). we can also print e.code as a statement within. 
+
+Do the above for wrong password. 
+
+Remember that hot reload doesn't affect anything changed within the main function. 
+
+Also create weak password invalid email and an email already in use exception handling within the register view. For all of these make sure to get the e code yourself instead of guessing. Reps are good. 
+
+
+
+
+
+
 # References
 
 https://flutter.dev/
