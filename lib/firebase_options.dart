@@ -83,4 +83,5 @@ class DefaultFirebaseOptions {
     authDomain: 'noteski.firebaseapp.com',
     storageBucket: 'noteski.appspot.com',
   );
+
 }
