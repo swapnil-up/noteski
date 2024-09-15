@@ -32,7 +32,7 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Noteski'),
+          title: const Text('Login'),
         ),
         body: FutureBuilder(
           future: Firebase.initializeApp(
@@ -64,14 +64,26 @@ class _LoginViewState extends State<LoginView> {
                       onPressed: () async {
                         final email = _email.text;
                         final password = _password.text;
-                        final userCredential = await FirebaseAuth.instance
-                            .signInWithEmailAndPassword(
-                          email: email,
-                          password: password,
-                        );
-                        print(userCredential);
+                        try {
+                          final userCredential = await FirebaseAuth.instance
+                              .signInWithEmailAndPassword(
+                            email: email,
+                            password: password,
+                          );
+                          print(userCredential);
+                        } on FirebaseAuthException catch (e) {
+                          print(e.code);
+                          if (e.code == 'invalid-credential') {
+                            print('credentials are incorrect');
+                          } else if (e.code == 'invalid-email') {
+                            print('email is invalid');
+                          }
+                        } catch (e) {
+                          print(e);
+                          print(e.runtimeType);
+                        }
                       },
-                      child: Text('Register'),
+                      child: Text('Login'),
                     ),
                   ],
                 );

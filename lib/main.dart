@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:noteski/views/login_view.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -12,7 +13,7 @@ void main() {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const RegisterView(),
+      home: const LoginView(),
     ),
   );
 }
@@ -46,7 +47,7 @@ class _RegisterViewState extends State<RegisterView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Noteski'),
+          title: const Text('Register'),
         ),
         body: FutureBuilder(
           future: Firebase.initializeApp(
@@ -78,12 +79,26 @@ class _RegisterViewState extends State<RegisterView> {
                       onPressed: () async {
                         final email = _email.text;
                         final password = _password.text;
-                        final userCredential = await FirebaseAuth.instance
-                            .createUserWithEmailAndPassword(
-                          email: email,
-                          password: password,
-                        );
-                        print(userCredential);
+                        try {
+                          final userCredential = await FirebaseAuth.instance
+                              .createUserWithEmailAndPassword(
+                            email: email,
+                            password: password,
+                          );
+                          print(userCredential);
+                        } on FirebaseAuthException catch (e) {
+                          print(e.code);
+                          if (e.code == 'invalid-email') {
+                            print('use correct email format');
+                          } else if (e.code == 'weak-password') {
+                            print('password is a minimum of 6 characters');
+                          } else if (e.code == 'email-already-in-use') {
+                            print('email is already in use bro');
+                          }
+                        } catch (e) {
+                          print(e);
+                          print(e.runtimeType);
+                        }
                       },
                       child: Text('Register'),
                     ),
