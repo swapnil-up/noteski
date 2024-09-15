@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:noteski/api_keys.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -41,7 +42,7 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCeQEphPlyBw09Vv4DCdil5RhWtkQpMX2M',
+    apiKey: browser_key,
     appId: '1:1016276566678:web:535c409732c4632faeb8b7',
     messagingSenderId: '1016276566678',
     projectId: 'noteski',
@@ -50,7 +51,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDpl-z-gIKArBs_NoE2xLLoVT_m_rn5fH0',
+    apiKey: android_key,
     appId: '1:1016276566678:android:897da15817ef82dfaeb8b7',
     messagingSenderId: '1016276566678',
     projectId: 'noteski',
@@ -58,7 +59,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyC9BMFKoeRwkNIPcphb8wvqEqfKIiBJJ3E',
+    apiKey: ios_key,
     appId: '1:1016276566678:ios:5e14a2fd3965a108aeb8b7',
     messagingSenderId: '1016276566678',
     projectId: 'noteski',
