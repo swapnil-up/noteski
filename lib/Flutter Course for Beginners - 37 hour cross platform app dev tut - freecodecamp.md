@@ -331,12 +331,47 @@ To catch specific type of exceptions, after try just write on ExceptionType catc
 
 Do the above for wrong password. 
 
+NOTE: Since the video is old, currently to prevent email enumeration attacks, errors related to logging in such as user not found and wrong password are grouped under invalid credentials. 
+
 Remember that hot reload doesn't affect anything changed within the main function. 
 
 Also create weak password invalid email and an email already in use exception handling within the register view. For all of these make sure to get the e code yourself instead of guessing. Reps are good. 
 
+### Chapter 14: Separate other views from app initialization
 
+First move register view to it's own file. 
 
+Now we make a simple stateless homepage. This will directly initialize the firebase everytime. Just show done and loading for the two cases. 
+
+Ensure the user is non-null and their email is verified. Print the user into console
+
+Now we also have a quick check to see if the user is verified. For that we'll have to be careful and remember that the user could be null and also use a ternary operator.
+
+### Chapter 15: Github
+
+A tag is cool, as we can use a tag to label things into categories.
+
+### Chapter 16: Email verification view
+
+Email verification by sending a link in your gmail that you need to first click. 
+
+First we made a stateful widget for verifyemail. 
+
+We create a navigator to push screens. It's a way to route pages. 
+	Navigator.of(context).push(MaterialPageRoute(builder:(context)=>const VerifyEmailView()))
+
+The problem with the navigator is that we can't push a whole scaffold without getting an error. A simple way is to get just the column. 
+
+The new view has a message then a verification button. While sending the email verification command got to remember that user can initially be null so ? but then this is async as we have to await a result. 
+
+Once you get an email, you have to login once more to make the user verified.
+
+The email isn't being verified though. Keeps saying that invalid or timed out when I click the link. 
+FUCKING FOUR HOURS ON THAT SHIT. TRIED ALL SORTS OF FUCKING SOLUTIONS AND HOOPS. The problems was that I changed my api keys for google cloud platform because I pushed them to github like a newb (fair), but it wasn't updated in firebase project settings. Tried all sorts of different maneuvers until I finally realized that maybe the one thing I did different might've caused the problem. So reverted it and I'm all good. UGHHHHHHHH.
+
+To solve the error, we simply return just the column, then instead of navigator, we return just the page
+
+Gotta change the login and register view to remove the future builder and return just a column.
 
 
 
@@ -346,5 +381,10 @@ https://flutter.dev/
 https://flutter25.benjamincarlson.io/
 https://dart.dev
 https://dart.dev/null-safety
+https://pub.dev/
 
 https://firebase.google.com/docs/flutter/setup
+https://cloud.google.com/identity-platform/docs/admin/email-enumeration-protection#disable
+https://docs.flutter.dev/resources/architectural-overview
+https://firebase.google.com/docs/flutter/setup (b sure to tick android)
+https://github.com/flutter/flutter/issues/16218 (for the futureBuilder login issue)
