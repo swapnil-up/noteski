@@ -1,6 +1,7 @@
 import 'dart:developer' as devtools show log;
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:noteski/constants/routes.dart';
 import 'package:noteski/views/login_view.dart';
 import 'package:noteski/views/register_view.dart';
 import 'package:noteski/views/verify_email_view.dart';
@@ -18,9 +19,9 @@ void main() {
       ),
       home: const HomePage(),
       routes: {
-        '/login/': (context) => const LoginView(),
-        '/register/': (context) => const RegisterView(),
-        '/notes/': (context) => const NotesView(),
+        loginRoute: (context) => const LoginView(),
+        registerRoute: (context) => const RegisterView(),
+        notesRoute: (context) => const NotesView(),
       },
     ),
   );
@@ -81,7 +82,7 @@ class _NotesViewState extends State<NotesView> {
               devtools.log(result.toString());
               if (result) {
                 FirebaseAuth.instance.signOut();
-                Navigator.of(context).popAndPushNamed('/login/');
+                Navigator.of(context).popAndPushNamed(loginRoute);
               }
             },
             itemBuilder: (context) => <PopupMenuEntry<MenuAction>>[
