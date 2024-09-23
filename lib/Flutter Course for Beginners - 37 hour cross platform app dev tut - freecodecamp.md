@@ -373,6 +373,61 @@ To solve the error, we simply return just the column, then instead of navigator,
 
 Gotta change the login and register view to remove the future builder and return just a column.
 
+### Chapter 17: Linking pages
+
+Adding a button to login view to connect to register view.
+
+A route is a way to move into a new location. We define our list? of routes in the main function. routes: then {values}. for example
+	'/login/': (context)=> const LoginView()
+
+OOF, the removed scaffold from the register and login view are replaced back in again. 
+
+For the route the button's onPressed has Navigator.of(context).pushNamedAndRemoveUntil('/login/',(route)=>false)
+
+Because we've made login and register as scaffold again, the homepage's build cannot start with a scaffold, as a scaffold cannot return a scaffold 
+
+make the loading text in builder a circular progress indicator. 
+
+Let's also create a new dart file and move verify email's code.
+
+The main builder also needs to change between different states based on conditions of if user is null or not, and whether the email is verified or not. 
+
+
+### Chapter 18: Logout
+
+First we're making the notesview which is our main widget. Make a scaffold. 
+
+We're adding a logout button on the appbar
+
+print is the poor man's debugger. We can also use log. The OS stores the print data, so it is not secure. 
+We import dart.developer to show only specific part we can also say show log. There's so many options so we can alias with devtools. This allows you to type devtools.log whenever. It must print a string so use .toString().
+
+We're creating a three dots in the corner, which opens a popup which will show our different options (popup menu items). 
+
+first we create an enumeration for the Menu actions which will only have logout atm. This is outside the notesview as a whole.
+
+In the appbar we fill the parameter actions just like we filled in title with a list [] of popupmenubutton which is of type menuaction. It needs two parameters one for onSelect and the other is an itembuilder which has a (context) and { returns list of popupmenuitem each of which has a value and a child}
+
+We must show either a dialog or logout. So we're creating a function to do this boolean decision. It's a Future<bool> and the buildcontext is just context. 
+
+An alert dialog creates only a dialog. To show it to the user we wrap? with showDialog. The alert dialog can have a title, content and actions (which are buttons for like cancel and logout). 
+
+When we return the showDialog of boolean type, it can return a null as a result of pressing say the back button which is neither of the actions. So we must get a false in that case. We do this by appending the whole showDialog with a .then(value) => value ?? false. Which handles the null case
+
+Now for the cancel and logout values we use the navigator to pop values of false and true.
+
+We now work on the button's onselected: (value). we switch into logout case and await the logout dialog that we created, then make a log to note it. 
+
+Now logout from firebase by calling signout for the instance of firebase auth. Let's also move the user out to the login page.
+
+This chapter turned much easier than I thought. Flutter has some good documentation for popups. That, combined with getting the hang of coding in flutter and reading the parameters needed and how to input them, made this chapter a breeze. 
+
+	https://api.flutter.dev/flutter/material/PopupMenuButton-class.html
+	https://api.flutter.dev/flutter/material/PopupMenuItem-class.html
+
+Took me a second to figure out that log itself doesn't require an await, only the logoutdialog's result. Nutty to think that the problem is that the user is too slow for the computer so we have to explicitly tell the computer to wait for the user.
+
+
 
 
 # References
