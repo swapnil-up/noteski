@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:noteski/firebase_options.dart';
+import 'dart:developer' as devtools show log;
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -11,8 +10,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-
-late TextEditingController _email;
+  late TextEditingController _email;
   late TextEditingController _password;
 
   @override
@@ -20,7 +18,6 @@ late TextEditingController _email;
     super.initState();
     _email = TextEditingController();
     _password = TextEditingController();
-    
   }
 
   @override
@@ -34,13 +31,13 @@ late TextEditingController _email;
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: const Text('Login'),
       ),
       body: Column(
         children: [
           TextField(
             controller: _email,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'enter your email',
             ),
             autocorrect: false,
@@ -48,7 +45,7 @@ late TextEditingController _email;
           ),
           TextField(
             controller: _password,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'enter your password',
             ),
             obscureText: true,
@@ -60,25 +57,27 @@ late TextEditingController _email;
               final email = _email.text;
               final password = _password.text;
               try {
-                final userCredential =
-                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                await FirebaseAuth.instance.signInWithEmailAndPassword(
                   email: email,
                   password: password,
                 );
-                print(userCredential);
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  '/notes/',
+                  (route) => false,
+                );
               } on FirebaseAuthException catch (e) {
-                print(e.code);
+                devtools.log(e.code.toString());
                 if (e.code == 'invalid-credential') {
-                  print('credentials are incorrect');
+                  devtools.log('credentials are incorrect');
                 } else if (e.code == 'invalid-email') {
-                  print('email is invalid');
+                  devtools.log('email is invalid');
                 }
               } catch (e) {
-                print(e);
-                print(e.runtimeType);
+                devtools.log(e.toString());
+                devtools.log(e.runtimeType.toString());
               }
             },
-            child: Text('Login'),
+            child: const Text('Login'),
           ),
           TextButton(
             onPressed: () {

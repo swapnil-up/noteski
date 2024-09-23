@@ -19,7 +19,8 @@ void main() {
       home: const HomePage(),
       routes: {
         '/login/': (context) => const LoginView(),
-        '/register/': (context) => const RegisterView()
+        '/register/': (context) => const RegisterView(),
+        '/notes/': (context) => const NotesView(),
       },
     ),
   );
@@ -42,16 +43,16 @@ class HomePage extends StatelessWidget {
 
             if (user != null) {
               if (user.emailVerified) {
-                return NotesView();
+                return const NotesView();
               } else {
-                return VerifyEmail();
+                return const VerifyEmail();
               }
             } else {
-              return LoginView();
+              return const LoginView();
             }
 
           default:
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
         }
       },
     );
@@ -101,16 +102,16 @@ Future<bool> logoutDialog(BuildContext context) {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Logout Dialog"),
-          content: Text("Are you sure you wish to logout?"),
+          title: const Text("Logout Dialog"),
+          content: const Text("Are you sure you wish to logout?"),
           actions: [
             TextButton(
               onPressed: () => {Navigator.of(context).pop(true)},
-              child: Text("logout"),
+              child: const Text("logout"),
             ),
             TextButton(
               onPressed: () => {Navigator.of(context).pop(false)},
-              child: Text("cancel"),
+              child: const Text("cancel"),
             ),
           ],
         );

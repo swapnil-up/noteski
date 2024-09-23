@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:noteski/firebase_options.dart';
+import 'dart:developer' as devtools show log;
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -32,13 +31,13 @@ class _RegisterViewState extends State<RegisterView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Register'),
+        title: const Text('Register'),
       ),
       body: Column(
         children: [
           TextField(
             controller: _email,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'enter your email',
             ),
             autocorrect: false,
@@ -46,7 +45,7 @@ class _RegisterViewState extends State<RegisterView> {
           ),
           TextField(
             controller: _password,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'enter your password',
             ),
             obscureText: true,
@@ -63,22 +62,22 @@ class _RegisterViewState extends State<RegisterView> {
                   email: email,
                   password: password,
                 );
-                print(userCredential);
+                devtools.log(userCredential.toString());
               } on FirebaseAuthException catch (e) {
-                print(e.code);
+                devtools.log(e.code.toString());
                 if (e.code == 'invalid-email') {
-                  print('use correct email format');
+                  devtools.log('use correct email format');
                 } else if (e.code == 'weak-password') {
-                  print('password is a minimum of 6 characters');
+                  devtools.log('password is a minimum of 6 characters');
                 } else if (e.code == 'email-already-in-use') {
-                  print('email is already in use bro');
+                  devtools.log('email is already in use bro');
                 }
               } catch (e) {
-                print(e);
-                print(e.runtimeType);
+                devtools.log(e.toString());
+                devtools.log(e.runtimeType.toString());
               }
             },
-            child: Text('Register'),
+            child: const Text('Register'),
           ),
           TextButton(
               onPressed: () {
