@@ -408,7 +408,7 @@ first we create an enumeration for the Menu actions which will only have logout 
 
 In the appbar we fill the parameter actions just like we filled in title with a list [] of popupmenubutton which is of type menuaction. It needs two parameters one for onSelect and the other is an itembuilder which has a (context) and { returns list of popupmenuitem each of which has a value and a child}
 
-We must show either a dialog or logout. So we're creating a function to do this boolean decision. It's a Future<bool> and the buildcontext is just context. 
+We must show either a dialog or logout. So we're creating a function to do this boolean decision. It's a Future bool and the buildcontext is just context. 
 
 An alert dialog creates only a dialog. To show it to the user we wrap? with showDialog. The alert dialog can have a title, content and actions (which are buttons for like cancel and logout). 
 
@@ -426,6 +426,63 @@ This chapter turned much easier than I thought. Flutter has some good documentat
 	https://api.flutter.dev/flutter/material/PopupMenuItem-class.html
 
 Took me a second to figure out that log itself doesn't require an await, only the logoutdialog's result. Nutty to think that the problem is that the user is too slow for the computer so we have to explicitly tell the computer to wait for the user.
+
+### Chapter 19: Login view routing
+
+We're converting the print statements into log statements. Remember to put .toString() at the end. 
+
+We add a new route called notes in main. 
+
+In Navigator, the pushNamed means that it is shown on top of the original view, and the RemoveUntil means that, the other screen is removed from the stack. This saves memory. 
+
+Easy as heck chapter. 
+
+### Chapter 20: Cleaning up routes
+
+The point is to learn not to hardcode things. So that we're able to follow DRY principle. We're fixing routes in this case. 
+
+We create a routes dart file placed in the constants directory within lib. Like with the hidden keys we put 
+	const loginRoute='/login/';
+then import and use loginRoute wherever. 
+
+
+### Chapter 21: Error handling shown to user
+
+We want to show the errors to user instead of just logging it. We do this by creating a generic dialog function.
+
+We're creating a showErrorDialog which has a parameter for context and text. It returns a future of type void this time. That's because we don't need the function to return anything, just show. 
+
+Like earlier we're bundling an alertDialog within a showDialog. Within we have our normal title, content and an ok button. With the onPressed() we just pop. 
+
+Within the exceptions we now pass the error as the content of the alert message. Remember to await. We are also creating errorDialogs for general errors and other FirebaseAuth errors. Use the string interpolation? while passing the text into dialog.
+
+we're moving the code to a separate file within the utilities directory in the lib. This is so that we can reuse elsewhere. 
+
+
+We are skipping discussions about the overlays atm. 
+
+
+### Chapter 22: Error handling and pagination in register view
+
+ 
+use the error dialog for all of register's errors as well. 
+
+go from register to verify view. use only pushNamed, no removeuntil so that if there was a mistake they can go back and not have to worry about the previous view not being in stack. 
+
+We're also sending the email when the signup is done before moving to the verify email page. Verify email is to now get you to resend if you hadn't already got an email.
+
+```
+const Text('A verification email has been sent, if you haven\'t received it yet, then click the button below'),
+
+const Text("A verification email has been sent, if you haven't received it yet, then click the button below"),
+```
+Two ways of escaping a single quote within a string. 
+
+Here vandad played himself, in that if he'd registered with a user he gets sent into the verify email and we do have our back button on the top left. But if he then deleted the user from the firebase console then when app is opened, the local doesn't understand that the user doesn't exist, the main builder sends to verifyEmailView() which results in no way to go back and forth (well besides removing cache on the device prolly). This resulted in the need to create a restart button. This button will signout from the firebase instance then route back to register view. 
+
+So another problem to fix is that if you register and then don't verify you again reach the main ui, which is a no no. Fixing in the next chapter. 
+
+
 
 
 

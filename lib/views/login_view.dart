@@ -71,15 +71,15 @@ class _LoginViewState extends State<LoginView> {
               } on FirebaseAuthException catch (e) {
                 devtools.log(e.code.toString());
                 if (e.code == 'invalid-credential') {
-                  showErrorDialog(context, 'invalid credentials');
+                  await showErrorDialog(context, 'invalid credentials');
                 } else if (e.code == 'invalid-email') {
-                  showErrorDialog(context, 'email is invalid');
+                  await showErrorDialog(context, 'email is invalid');
                 } else {
-                  showErrorDialog(context, '$e.code');
+                  await showErrorDialog(context, '$e.code');
                 }
               } catch (e) {
-                showErrorDialog(context, '$e');
-                showErrorDialog(context, '$e.runtimeType');
+                await showErrorDialog(context, '$e');
+                await showErrorDialog(context, '$e.runtimeType');
               }
             },
             child: const Text('Login'),

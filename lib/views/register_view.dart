@@ -65,6 +65,9 @@ class _RegisterViewState extends State<RegisterView> {
                   password: password,
                 );
                 devtools.log(userCredential.toString());
+                final user = FirebaseAuth.instance.currentUser;
+                user?.sendEmailVerification();
+                Navigator.of(context).pushNamed(verifyEmailRoute);
               } on FirebaseAuthException catch (e) {
                 devtools.log(e.code.toString());
                 if (e.code == 'invalid-email') {
