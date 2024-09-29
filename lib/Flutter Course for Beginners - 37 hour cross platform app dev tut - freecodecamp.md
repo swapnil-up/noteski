@@ -483,6 +483,62 @@ Here vandad played himself, in that if he'd registered with a user he gets sent 
 So another problem to fix is that if you register and then don't verify you again reach the main ui, which is a no no. Fixing in the next chapter. 
 
 
+### Chapter 23: Confirm id before going to main
+
+First we check if user is verified before moving to navigator for notesRoute. 
+
+### Chapter 24: Auth service and provider
+
+
+We're talking with firebase backend which should not directly talk with the UI of the app. We do this by creating an auth provider class and a auth service
+
+First we're dealing with exceptions by creating a dart file for auth exceptions within auth folder within services folder. We define all the errors there. 
+
+A class for the specific exception is created which inherits from Exception class. Besides the 5 cases we've made, we are also creating a genericAuthException to take care of else cases and a userNotLoggedInAuthException. 
+
+We are also creating an auth user dart file. We import auth package and get it show User. For the AuthUser we create a class which has a isEmailVerified boolean variable. We also create the constructor for AuthUser. We also make the whole class immutable. 
+
+We then create a factory constructor that makes auth users from firebase users. We create a factory 
+```
+factory AuthUser.fromFirebase(User user)=> AuthUser(user.emailVerified)
+```
+This creates authusers from firebase user by passing the email verified into the AuthUser on the right side. 
+
+We also have to make auth providers' interface. First is importing the auth user class we just made. The we create an abstract class called authprovider. We make it get the curreUser and return a Future for 
+1. login that'll require login and password. 
+2. Create user
+3. logout
+4. sendemailverification
+remember what will be returned with each of these
+
+Because it is an interface, we only have to think about the return type, we don't have to think about how the function body would work. For this same reason we are using the AuthUser to define stuff. 
+
+Next we'll be making a firebase auth provider. we import the above three files and also firebase auth and authexception
+
+Now our firebaseauthprovider implements the authprovider. It'll require you to fill a lot of cases. What does vscode use to suggest completions? Use that
+
+For current user, we get an instance of from firebaseauth then return null or call our factory constructor. 
+
+for creating the user, check the code how we did it. remember it's async. Then call the current user and check if we need to throw the usernotloggedin auth exception or not. then handle the exceptions. 
+
+For sendemailverification get the user and if it's null then usernotloggedin exception, or we send useremailverification. Forgot that this is yet another await operation. 
+
+On login too we have a try and catch block. 
+
+For logout we get user then logout or notloggedin
+
+Now we're creating an auth service. It creates an instance of the auth provider. A service usually creates with multiple things that are fused together. Here we don't do that due to a lack of time. 
+
+Within the dart file for this we import the user and provider. It inherits authprovider. We first create a variable for the auth provider and it's equivalent constructor. Then we just provider class' respective codes, made via ctrl+. Then instead of writing again we just pass the provider variable's methods into the service classes. 
+
+
+
+
+
+
+
+
+
 
 
 
