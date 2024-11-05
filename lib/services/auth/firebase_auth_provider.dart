@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:noteski/firebase_options.dart';
 import 'package:noteski/services/auth/auth_provider.dart' as custom;
 import 'package:noteski/services/auth/auth_users.dart';
 import 'package:noteski/services/auth/auth_exceptions.dart';
@@ -76,15 +78,13 @@ class FirebaseAuthProvider implements custom.AuthProvider {
   }
 
   @override
-  Future<void> logOut() async{
-    final user=currentUser;
-    if(user!=null){
+  Future<void> logOut() async {
+    final user = currentUser;
+    if (user != null) {
       await FirebaseAuth.instance.signOut();
-    }
-    else{
+    } else {
       throw UserNotLoggedInAuthException();
     }
-
   }
 
   @override
@@ -95,5 +95,12 @@ class FirebaseAuthProvider implements custom.AuthProvider {
     } else {
       throw UserNotLoggedInAuthException();
     }
+  }
+
+  @override
+  Future<void> initializeFirebase() async {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
   }
 }
